@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Inventario Bienes</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="probarstring">Probar Conexión</string>
+    <string name="PantallaPrincipal">Inventario</string>
+    <string name="title_activity_pantalla_inicio">PantallaInicio</string>
+    <string name="titulo">TecniSoft Inventario Bienes</string>
+    <string name="title_activity_revision_bien">RevisionBien</string>
+</resources>

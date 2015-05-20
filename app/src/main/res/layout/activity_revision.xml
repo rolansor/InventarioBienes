@@ -1,0 +1,327 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:focusable="true" android:focusableInTouchMode="true"
+        tools:context=".PantallaPrincipal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Codigo"
+            android:id="@+id/codigolabel"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="bottom|center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/codigotext"
+            android:layout_toStartOf="@+id/codigotext" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/codigotext"
+            android:layout_alignTop="@+id/codigolabel"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo"
+            android:id="@+id/tipolabel"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="bottom|center"
+            android:layout_below="@+id/codigotext"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/tipospinner"
+            android:layout_toStartOf="@+id/tipospinner"
+            android:layout_alignBottom="@+id/tipospinner" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tipospinner"
+            android:layout_below="@+id/codigotext"
+            android:layout_alignLeft="@+id/codigotext"
+            android:layout_alignStart="@+id/codigotext" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Departamento"
+            android:id="@+id/departamentolabel"
+            android:textColor="#000000"
+            android:textSize="17dp"
+            android:gravity="bottom|center"
+            android:layout_below="@+id/tipolabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/departamentospinner"
+            android:layout_toStartOf="@+id/departamentospinner"
+            android:layout_alignBottom="@+id/departamentospinner" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/departamentospinner"
+            android:layout_below="@+id/tipospinner"
+            android:layout_alignLeft="@+id/tipospinner"
+            android:layout_alignStart="@+id/tipospinner" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Marca"
+            android:id="@+id/marcalabel"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="bottom|center"
+            android:layout_below="@+id/departamentolabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/marcatext"
+            android:layout_toStartOf="@+id/marcatext"
+            android:layout_alignBottom="@+id/marcatext"
+            android:layout_alignTop="@+id/marcatext"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/marcatext"
+            android:layout_below="@+id/departamentospinner"
+            android:layout_alignLeft="@+id/departamentospinner"
+            android:layout_alignStart="@+id/departamentospinner"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modelo"
+            android:id="@+id/modelolabel"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="bottom|center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/modelotext"
+            android:layout_toStartOf="@+id/modelotext"
+            android:layout_alignBottom="@+id/modelotext"
+            android:layout_alignTop="@+id/modelotext" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/modelotext"
+            android:layout_below="@+id/marcatext"
+            android:layout_alignLeft="@+id/marcatext"
+            android:layout_alignStart="@+id/marcatext"  />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Numero de Parte"
+            android:id="@+id/numpartelabel"
+            android:textColor="#000000"
+            android:textSize="17dp"
+            android:gravity="bottom|center"
+            android:layout_below="@+id/modelolabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/numpartetext"
+            android:layout_toStartOf="@+id/numpartetext"
+            android:layout_alignBottom="@+id/numpartetext"
+            android:layout_alignTop="@+id/numpartetext"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/numpartetext"
+            android:layout_below="@+id/modelotext"
+            android:layout_alignLeft="@+id/modelotext"
+            android:layout_alignStart="@+id/modelotext"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Numero de Serie"
+            android:id="@+id/numserielabel"
+            android:textColor="#000000"
+            android:textSize="17dp"
+            android:gravity="bottom|center"
+            android:layout_below="@+id/modelolabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/numserietext"
+            android:layout_toStartOf="@+id/numserietext"
+            android:layout_alignBottom="@+id/numserietext"
+            android:layout_alignTop="@+id/numserietext"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/numserietext"
+            android:layout_below="@+id/numpartetext"
+            android:layout_alignLeft="@+id/numpartetext"
+            android:layout_alignStart="@+id/numpartetext"  />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estado"
+            android:id="@+id/estadolabel"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="bottom|center"
+            android:layout_below="@+id/numserielabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/estadospinner"
+            android:layout_toStartOf="@+id/estadospinner"
+            android:layout_alignBottom="@+id/estadospinner" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/estadospinner"
+            android:layout_below="@+id/numserietext"
+            android:layout_alignLeft="@+id/numserietext"
+            android:layout_alignStart="@+id/numserietext" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Color"
+            android:id="@+id/colorlabel"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="bottom|center"
+            android:layout_below="@+id/estadolabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/colortext"
+            android:layout_toStartOf="@+id/colortext"
+            android:layout_alignBottom="@+id/colortext"
+            android:layout_alignTop="@+id/colortext"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/colortext"
+            android:layout_below="@+id/estadospinner"
+            android:layout_alignLeft="@+id/estadospinner"
+            android:layout_alignStart="@+id/estadospinner"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Custodio"
+            android:id="@+id/custodiolabel"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="bottom|center"
+            android:layout_below="@+id/colorlabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/custodiospinner"
+            android:layout_toStartOf="@+id/custodiospinner"
+            android:layout_alignBottom="@+id/custodiospinner" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/custodiospinner"
+            android:layout_below="@+id/colortext"
+            android:layout_alignLeft="@+id/colortext"
+            android:layout_alignStart="@+id/colortext" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Proveedor"
+            android:id="@+id/proveedorlabel"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="bottom|center"
+            android:layout_below="@+id/custodiolabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/proveedorspinner"
+            android:layout_toStartOf="@+id/proveedorspinner"
+            android:layout_alignBottom="@+id/proveedorspinner" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/proveedorspinner"
+            android:layout_below="@+id/custodiospinner"
+            android:layout_alignLeft="@+id/custodiospinner"
+            android:layout_alignStart="@+id/custodiospinner" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Caracteristicas"
+            android:id="@+id/caracteristicaslabel"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="bottom|center"
+            android:layout_below="@+id/proveedorlabel"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:layout_below="@+id/caracteristicaslabel"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Imagen"
+            android:id="@+id/imagenlabel"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="bottom|center"
+            android:layout_below="@+id/editText"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageview"
+            android:layout_below="@+id/imagenlabel"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+</ScrollView>
