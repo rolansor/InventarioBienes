@@ -37,7 +37,8 @@
         android:id="@+id/codigotext"
         android:layout_alignTop="@+id/codigolabel"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:text="151226" />
 
     <!-- Switcher -->
     <TextView
@@ -90,7 +91,8 @@
         android:layout_below="@+id/espadreswitch"
         android:layout_alignLeft="@+id/espadreswitch"
         android:layout_alignStart="@+id/espadreswitch"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:text="151226"/>
 
     <!-- Tipo -->
     <TextView
@@ -203,7 +205,8 @@
         android:layout_toLeftOf="@+id/marcatext"
         android:layout_toStartOf="@+id/marcatext"
         android:layout_alignBottom="@+id/marcatext"
-        android:layout_alignTop="@+id/marcatext"/>
+        android:layout_alignTop="@+id/marcatext"
+        />
 
     <EditText
         android:layout_width="wrap_content"
@@ -212,7 +215,8 @@
         android:id="@+id/marcatext"
         android:layout_below="@+id/zonaspinner"
         android:layout_alignLeft="@+id/zonaspinner"
-        android:layout_alignStart="@+id/zonaspinner"  />
+        android:layout_alignStart="@+id/zonaspinner"
+        android:text="asdasdasd"/>
 
     <!-- Modelo -->
     <TextView
@@ -237,7 +241,8 @@
         android:id="@+id/modelotext"
         android:layout_below="@+id/marcatext"
         android:layout_alignLeft="@+id/marcatext"
-        android:layout_alignStart="@+id/marcatext"  />
+        android:layout_alignStart="@+id/marcatext"
+        android:text="asdasdsad"/>
 
     <!-- Numero de Parte -->
     <TextView
@@ -264,7 +269,8 @@
         android:id="@+id/numpartetext"
         android:layout_below="@+id/modelotext"
         android:layout_alignLeft="@+id/modelotext"
-        android:layout_alignStart="@+id/modelotext"  />
+        android:layout_alignStart="@+id/modelotext"
+        android:text="151226"/>
 
     <!-- Serie -->
     <TextView
@@ -291,7 +297,8 @@
         android:id="@+id/numserietext"
         android:layout_below="@+id/numpartetext"
         android:layout_alignLeft="@+id/numpartetext"
-        android:layout_alignStart="@+id/numpartetext"  />
+        android:layout_alignStart="@+id/numpartetext"
+        android:text="151226"/>
 
     <!-- Estado -->
     <TextView
@@ -341,7 +348,8 @@
         android:id="@+id/colortext"
         android:layout_below="@+id/estadospinner"
         android:layout_alignLeft="@+id/estadospinner"
-        android:layout_alignStart="@+id/estadospinner"  />
+        android:layout_alignStart="@+id/estadospinner"
+        android:text="sdfdsfsdf"/>
 
     <!-- Custodio -->
     <TextView
@@ -408,12 +416,13 @@
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/caracteristicastext"
         android:layout_below="@+id/caracteristicaslabel"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:text="adfsdfadsfdsafasdfdsfasdf"/>
 
     <!-- Imagen -->
     <TextView
@@ -424,20 +433,37 @@
         android:textColor="#000000"
         android:textSize="20dp"
         android:gravity="center"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/caracteristicastext"
         android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:id="@+id/imageview"
+        android:id="@+id/imagenBien"
         android:layout_below="@+id/imagenlabel"
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:src="@mipmap/ic_camera"
         android:layout_marginTop="20dp" />
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        android:id="@+id/guardarButton"
+        android:clickable="true"
+        android:layout_below="@+id/imagenBien"
+        android:layout_alignLeft="@+id/imagenBien"
+        android:layout_alignStart="@+id/imagenBien" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:id="@+id/cancelarButton"
+        android:clickable="true"
+        android:layout_below="@+id/imagenBien"
+        android:layout_alignRight="@+id/imagenBien"
+        android:layout_alignEnd="@+id/imagenBien" />
 
 
 </RelativeLayout>

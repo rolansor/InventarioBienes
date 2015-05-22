@@ -3,6 +3,7 @@ package com.example.rolandoandres.inventariobienes;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,11 +23,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,14 +41,27 @@ import java.util.Date;
 public class Ingreso extends ActionBarActivity {
     private String[] listaElementos;
     private Connection conexionMySQL;
-    private Spinner spnTipos, spnDepartamento,spnEstado,spnCustodio,spnProveedor;
+
+    private Spinner tipospinner, departamentospinner,zonaspinner, areaspinner, estadospinner,custodiospinner,proveedorspinner;
+    private EditText codigotext, espadretext,marcatext,modelotext,numpartetext,numserietext,colortext,caracteristicastext;
+
+    private int numtipo, numdepartamento,numzona, numarea,numpadre ,numcustodio,numproveedor,numserie,numparte;
+    private String txtcodigo,txtestado,txtmarca,txtmodelo,txtcolor,txtcaracteristicas;
+    private String txtSwitch ="false";
+
+    private Button guardarButton,cancelarButton;
+    private TextView codigolabel, espadrelabel,imagenlabel,codigopadrelabel,numpartelabel,numserielabel,colorlabel,custodiolabel,estadolabel,caracteristicaslabel,proveedorlabel, modelolabel,tipolabel,departamentolabel,arealabel,zonalabel,marcalabel ;
+    private Switch espadreswitch;
+    private ImageView imagenBien;
+
+
     private ArrayAdapter adaptador;
     private static final int CAMERA_PIC_REQUEST = 0;
     private File photoFile;
-    private ImageView imagenBien;
-    private Switch switchPadre;
-    private TextView codigopadrelabel;
-    private EditText espadretext;
+
+
+
+
     private static final String textIP = "192.168.1.100";
     private static final String textPuerto = "3306";
     private static final String textContrasena = "root";
@@ -60,42 +78,65 @@ public class Ingreso extends ActionBarActivity {
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_ingreso);
 
+        conectarBDMySQL();
 
+        tipospinner = (Spinner)findViewById(R.id.tipospinner);
+        departamentospinner = (Spinner)findViewById(R.id.departamentospinner);
+        zonaspinner = (Spinner)findViewById(R.id.zonaspinner);
+        areaspinner = (Spinner)findViewById(R.id.areaspinner);
+        estadospinner = (Spinner)findViewById(R.id.estadospinner);
+        custodiospinner = (Spinner)findViewById(R.id.custodiospinner);
+        proveedorspinner = (Spinner)findViewById(R.id.proveedorspinner);
 
+        espadretext = (EditText) findViewById(R.id.espadretext);
+        codigotext = (EditText) findViewById(R.id.codigotext);
+        marcatext = (EditText) findViewById(R.id.marcatext);
+        modelotext = (EditText) findViewById(R.id.modelotext);
+        numpartetext = (EditText) findViewById(R.id.numpartetext);
+        numserietext = (EditText) findViewById(R.id.numserietext);
+        colortext = (EditText) findViewById(R.id.colortext);
+        caracteristicastext = (EditText) findViewById(R.id.caracteristicastext);
 
-        spnTipos = (Spinner)findViewById(R.id.tipospinner);
+        codigopadrelabel = (TextView) findViewById(R.id.codigopadrelabel);
+        espadreswitch = (Switch) findViewById(R.id.espadreswitch);
+        imagenBien = (ImageView) findViewById(R.id.imagenBien);
+
+        guardarButton = (Button) findViewById(R.id.guardarButton);
+        cancelarButton = (Button) findViewById(R.id.cancelarButton);
+
+        //
         obtenerListaTablas("select nombreTipo from tipo");
-        spnTipos.setAdapter(adaptador);
-
-        spnDepartamento = (Spinner)findViewById(R.id.departamentospinner);
+        tipospinner.setAdapter(adaptador);
+        //
         obtenerListaTablas("select nombreDep from departamento");
-        spnDepartamento.setAdapter(adaptador);
-
-        spnEstado = (Spinner)findViewById(R.id.estadospinner);
+        departamentospinner.setAdapter(adaptador);
+        //
+        obtenerListaTablas("select nombreZona from Zona");
+        zonaspinner.setAdapter(adaptador);
+        //
+        obtenerListaTablas("select nombreArea from Area");
+        areaspinner.setAdapter(adaptador);
+        //
         adaptador = new ArrayAdapter(Ingreso.this,
-                android.R.layout.simple_list_item_1, listaEstado);
-
+                    android.R.layout.simple_list_item_1, listaEstado);
         adaptador.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
-        spnEstado.setAdapter(adaptador);
-
-        spnCustodio = (Spinner)findViewById(R.id.custodiospinner);
+        estadospinner.setAdapter(adaptador);
+        //
         obtenerListaTablas("select nombreEmp from empleado");
-        spnCustodio.setAdapter(adaptador);
-
-        spnProveedor = (Spinner)findViewById(R.id.proveedorspinner);
+        custodiospinner.setAdapter(adaptador);
+        //
         obtenerListaTablas("select nombrePro from proveedor");
-        spnProveedor.setAdapter(adaptador);
+        proveedorspinner.setAdapter(adaptador);
 
-        imagenBien = (ImageView) findViewById(R.id.imageview);
-
+        //
         imagenBien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     // Create the File where the photo should go
-                        photoFile = null;
+                    photoFile = null;
                     try {
                         photoFile = createImageFile();
                     } catch (IOException ex) {
@@ -104,47 +145,75 @@ public class Ingreso extends ActionBarActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                     if (photoFile != null) {
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(photoFile));
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
                         startActivityForResult(takePictureIntent, CAMERA_PIC_REQUEST);
                     }
                 }
             }
         });
-
-        switchPadre = (Switch) findViewById(R.id.espadreswitch);
-        codigopadrelabel = (TextView) findViewById(R.id.codigopadrelabel);
-        espadretext = (EditText) findViewById(R.id.espadretext);
-        switchPadre.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //
+        espadreswitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     codigopadrelabel.setVisibility(View.VISIBLE);
                     espadretext.setVisibility(View.VISIBLE);
-                }
-                else{
+                    txtSwitch ="true";
+                } else {
                     codigopadrelabel.setVisibility(View.GONE);
                     espadretext.setVisibility(View.GONE);
+                    txtSwitch ="false";
                 }
+            }
+        });
+
+        //
+        guardarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+
+                txtcodigo = codigotext.getText().toString();
+                numpadre = Integer.parseInt(espadretext.getText().toString());
+                numtipo = consultarid("tipo", "idTipo", "nombreTipo", tipospinner.getItemAtPosition(tipospinner.getSelectedItemPosition()).toString());
+                numdepartamento = consultarid("departamento","idDepartamento", "nombreDep",departamentospinner.getItemAtPosition(departamentospinner.getSelectedItemPosition()).toString());
+                numarea = consultarid("area", "idArea","nombreArea",areaspinner.getItemAtPosition(areaspinner.getSelectedItemPosition()).toString());
+                numzona = consultarid("zona", "idZona","nombreZona",zonaspinner.getItemAtPosition(zonaspinner.getSelectedItemPosition()).toString());
+                txtmarca = marcatext.getText().toString();
+                txtmodelo = modelotext.getText().toString();
+                numparte = Integer.parseInt(numpartetext.getText().toString());
+                numserie = Integer.parseInt(numserietext.getText().toString());
+                txtestado = estadospinner.getItemAtPosition(estadospinner.getSelectedItemPosition()).toString();
+                txtcolor = colortext.getText().toString();
+                numcustodio = consultarid("empleado", "idEmpleado", "nombreEmp", custodiospinner.getItemAtPosition(custodiospinner.getSelectedItemPosition()).toString());
+                numproveedor = consultarid("proveedor", "idProveedor","nombrePro",proveedorspinner.getItemAtPosition(proveedorspinner.getSelectedItemPosition()).toString());
+                txtcaracteristicas = caracteristicastext.getText().toString();
+                guardarArticulo(getApplicationContext());
+
+
+
+            }
+        });
+
+        //
+        cancelarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_ingreso, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.probarconexion) {
-            conectarBDMySQL();
+           // conectarBDMySQL();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -190,7 +259,6 @@ public class Ingreso extends ActionBarActivity {
     {
         try
         {
-            conectarBDMySQL();
             Statement st = conexionMySQL.createStatement();
             ResultSet rs = st.executeQuery(sql);
             rs.last();
@@ -224,11 +292,7 @@ public class Ingreso extends ActionBarActivity {
     public void conectarBDMySQL ()
     {
             String urlConexionMySQL = "";
-            if (catalogoMySQL != "")
-                urlConexionMySQL = "jdbc:mysql://" + textIP + ":" +
-                        textPuerto + "/" + catalogoMySQL;
-            else
-                urlConexionMySQL = "jdbc:mysql://" + textIP + ":" + textPuerto;
+                urlConexionMySQL = "jdbc:mysql://" + textIP + ":" +textPuerto + "/" + catalogoMySQL;
             try
                 {
                     Class.forName("com.mysql.jdbc.Driver");
@@ -249,28 +313,68 @@ public class Ingreso extends ActionBarActivity {
                 }
     }
 
-    public void ejecutarSql (String sql, Context context)
+    public int consultarid(String tabla, String columna1, String columna2, String descripcion ) {
+        int id=0;
+        try {
+            Statement st = conexionMySQL.createStatement();
+            String sql ="select " + columna1 + " from " + tabla + " where " + columna2 + " = \"" + descripcion + "\"";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next())
+                id = rs.getInt(1);
+            st.close();
+            rs.close();
+            return id;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return id;
+    }
+
+    public void guardarArticulo(Context context)
     {
-        try
-        {
-            // consulta SQL de modificación de
-            // datos (CREATE, DROP, INSERT, UPDATE)
 
-                conectarBDMySQL();
-                Statement st = conexionMySQL.createStatement();
-                st.executeUpdate(sql);
-                st.close();
-                Toast.makeText(context,
-                    "Se ha guardado exitosamente el registro.",
+        String articuloDetalle="(codigoArt,marcaArt,modeloArt,colorArt,numeroparteArt,numeroserieArt,estadoArt,imagenArt,jerarquiaArt,articuloPadre,idDepartamento,idArea,idZona,idTipo,fk_idProveedor,fk_idEmpleado)";
+        String sqlSentence;
+        sqlSentence = "insert into articulo"+articuloDetalle+" values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        FileInputStream imagestream = null;
+        PreparedStatement ps = null;
+        try {
+            conexionMySQL.setAutoCommit(false);
+            imagestream = new FileInputStream(this.photoFile);
+            ps = conexionMySQL.prepareStatement(sqlSentence);
+            ps.setString(1, txtcodigo);
+            ps.setString(2, txtmarca);
+            ps.setString(3, txtmodelo);
+            ps.setString(4, txtcolor);
+            ps.setInt(5, numparte);
+            ps.setInt(6, numserie);
+            ps.setString(7, txtestado);
+            ps.setBinaryStream(8, imagestream, (int) this.photoFile.length());
+            ps.setString(9, txtSwitch);
+            ps.setInt(10, numpadre);
+            ps.setInt(11, numdepartamento);
+            ps.setInt(12, numarea);
+            ps.setInt(13, numzona);
+            ps.setInt(14, numtipo);
+            ps.setInt(15, numproveedor);
+            ps.setInt(16, numcustodio);
+            ps.executeUpdate();
+            conexionMySQL.commit();
+            ps.close();
+            Toast.makeText(getApplicationContext(),
+                    "Se ha guardado exitosamente el registro",
                     Toast.LENGTH_SHORT).show();
+            limpiarcampos();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
+    }
 
-        catch (Exception e)
-        {
-            Toast.makeText(context,
-                    "Error: " + e.getMessage(),
-                    Toast.LENGTH_SHORT).show();
-        }
+    private void limpiarcampos(){
+
     }
 }
 
